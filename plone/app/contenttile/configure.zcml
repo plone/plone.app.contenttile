@@ -1,0 +1,44 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:z3c="http://namespaces.zope.org/z3c"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="plone">
+
+    <include package="z3c.form" file="meta.zcml" />
+    <include package="z3c.form" />
+    <include package="plone.namedfile" />
+    <include package="plone.app.tiles" />
+
+    <browser:resource name="plone.app.contenttile.png" file="tile.png" />
+
+    <plone:tile
+        name="plone.app.contenttile"
+        title="Content tile"
+        description="A tile which adds content"
+        icon="++resource++plone.app.contenttile.png"
+        permission="zope2.View"
+        add_permission="plone.app.tiles.AddTile"
+        class=".tile.ContentTile"
+        schema=".tile.IContentTile"
+        template="tile.pt"
+        for="*"
+        />
+
+    <genericsetup:registerProfile
+        name="default"
+        title="Content tile"
+        description="A content tile which can be used by Deco and Blocks"
+        directory="profiles/default"
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+    <browser:view
+        name="summary-tileview"
+        for="*"
+        class=".tile.SummaryTileView"
+        permission="zope.Public"
+        />
+
+</configure>

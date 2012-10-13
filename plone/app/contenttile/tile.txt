@@ -1,0 +1,48 @@
+
+First, we set up a browser instance and get Manager privileges::
+
+    >>> from plone.testing.z2 import Browser
+    >>> app = layer['app']
+    >>> browser = Browser(app)
+    >>> browser.handleErrors = False
+    >>> portal = layer['portal']
+    >>> portal_url = portal.absolute_url()
+
+    >>> from plone.app.testing import setRoles
+    >>> from plone.app.testing import TEST_USER_ID, TEST_USER_NAME, TEST_USER_PASSWORD
+    >>> browser.addHeader('Authorization', 'Basic %s:%s' % (TEST_USER_NAME, TEST_USER_PASSWORD,))
+    >>> setRoles(portal, TEST_USER_ID, ['Manager'])
+
+    >>> import transaction
+    >>> transaction.commit() # make the browser see this role
+
+We also keep another testbrowser handy for testing how tiles are rendered if
+you're not logged in::
+
+    >>> unprivileged_browser = Browser(app)
+
+We create a page in the site to use it in tests later::
+
+    >>> browser.open(portal_url + '/createObject?type_name=Document')
+    >>> browser.getControl(name='title').value = 'A simple page'
+    >>> browser.getControl(name='description').value = 'A description'
+    >>> browser.getControl('Save').click()
+    >>> page_url = browser.url
+    >>> page_obj = portal['a-simple-page']
+    >>> page_url
+    'http://nohost/plone/a-simple-page'
+
+Content tile
+-----------
+
+The content tile shows field from proxied object via UID and filed name.
+We now create an content tile, initially the form is empty::
+
+    >>> browser.open(portal_url + '/@@add-tile/plone.app.contenttile')
+    >>> browser.getControl(name='plone.app.contenttile.buddy').value = page_obj.UID()
+    >>> browser.getControl(label='Save').click()
+    >>> page_obj.Title() in browser.contents
+    True
+    >>> page_obj.Description() in browser.contents
+    True
+    

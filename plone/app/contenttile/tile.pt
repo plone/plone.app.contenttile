@@ -1,0 +1,17 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+  metal:use-macro="context/@@tile-wrapper/master"
+  i18n:domain="plone">
+
+  <metal:tile fill-slot="content">
+
+  <div class="tile-content" tal:define="buddy view/getBuddy">
+      <tal:block replace="structure buddy/summary-tileview" />
+
+    </div>
+
+  </metal:tile>
+
+</html>

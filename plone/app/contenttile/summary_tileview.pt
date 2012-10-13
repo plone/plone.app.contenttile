@@ -1,0 +1,2 @@
+<h2 tal:content="view/context/title">Title</h2>
+<p tal:define="description python: view.context.Description()" tal:condition="description" tal:content="description">Descritpion</p>
