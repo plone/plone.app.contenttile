@@ -14,8 +14,7 @@ _ = MessageFactory('plone')
 class IContentTile(ITileBaseSchema):
 
     form.widget()
-    #form.widget(buddy='plone.app.contenttile.contentwidget.ContentFieldWidget')
-    buddy = TextLine(title=u"Buddy object",
+    content = TextLine(title=u"Content object",
             description=u"Select one, please")
 
 class ContentTile(PersistentTile):
@@ -26,9 +25,9 @@ class ContentTile(PersistentTile):
     url and output an <img /> tag.
     """
     
-    def getBuddy(self):
+    def getContent(self):
         catalog = cmfutils.getToolByName(self.context, 'portal_catalog')
-        UID = self.data['buddy']
+        UID = self.data['content']
         obj = None
         if len(catalog(UID=UID))>0:
             obj = catalog(UID=UID)[0].getObject()

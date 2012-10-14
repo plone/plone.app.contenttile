@@ -39,7 +39,7 @@ The content tile shows field from proxied object via UID and filed name.
 We now create an content tile, initially the form is empty::
 
     >>> browser.open(portal_url + '/@@add-tile/plone.app.contenttile')
-    >>> browser.getControl(name='plone.app.contenttile.buddy').value = page_obj.UID()
+    >>> browser.getControl(name='plone.app.contenttile.content').value = page_obj.UID()
     >>> browser.getControl(label='Save').click()
     >>> page_obj.Title() in browser.contents
     True
