@@ -10,6 +10,12 @@ based on.
 Please report issues in `Deco's issue tracker`_
 
 
+How it works
+------------
+
+Select content by UID, it shows default **summury-tileview** 
+
+
 Changelog
 =========
 

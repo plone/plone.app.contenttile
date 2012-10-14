@@ -41,8 +41,9 @@ We now create an content tile, initially the form is empty::
     >>> browser.open(portal_url + '/@@add-tile/plone.app.contenttile')
     >>> browser.getControl(name='plone.app.contenttile.content').value = page_obj.UID()
     >>> browser.getControl(label='Save').click()
-    >>> page_obj.Title() in browser.contents
-    True
-    >>> page_obj.Description() in browser.contents
+
+It shows by default summary-tileview which contains title and description
+
+    >>> page_obj.Title() and page_obj.Description() in browser.contents
     True
     
