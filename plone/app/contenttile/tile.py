@@ -7,15 +7,27 @@ from zope.publisher.browser import BrowserView
 
 from Products.CMFCore import utils as cmfutils
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.site.hooks import getSite
+
+from zope.interface import Invalid
+
 
 _ = MessageFactory('plone')
 
+
+def validateUID(value):
+    catalog = cmfutils.getToolByName(getSite(), 'portal_catalog')
+    if not len(catalog(UID=value))==1:
+        raise Invalid(_(u"Wrong UID to object"))
+    return True
+    
 
 class IContentTile(ITileBaseSchema):
 
     form.widget()
     content = TextLine(title=u"Content object",
-            description=u"Select one, please")
+            description=u"Select one, please",
+            constraint=validateUID)
 
 class ContentTile(PersistentTile):
     """A tile which displays an content.

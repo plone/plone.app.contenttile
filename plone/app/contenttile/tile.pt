@@ -7,10 +7,9 @@
 
   <metal:tile fill-slot="content">
 
-  <div class="tile-content" tal:define="content view/getContent">
+  <div class="tile-content" tal:define="content view/getContent" tal:condition="content">
       <tal:block replace="structure content/summary-tileview" />
-
-    </div>
+  </div>
 
   </metal:tile>
 
